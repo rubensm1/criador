@@ -31,7 +31,7 @@
                 width: 20px;
                 height: 20px;
                 margin: 0px;
-                margin-top: -5px;
+                margin-top: 1px;
                 vertical-align: bottom;
             }
             .table-bordered td, .table-bordered th {
@@ -333,10 +333,19 @@
                                                 this.options = options;
                                             }
                                             Campo.extract = function (tr) {
-                                                return new Campo(
-                                                    tr.getElementsByClassName("campo-tipo")[0].value,
+                                                var tipo = tr.getElementsByClassName("campo-tipo")[0].value;
+												var options = null;
+												if (tipo == 'enum') {
+													options = [];
+													tdOp = tr.getElementsByClassName("campo-options");
+													for (var i = 0; i < tdOp.length; i++)
+														options.push(tdOp[i].value);
+												}
+												return new Campo(
+                                                    tipo,
                                                     tr.getElementsByClassName("campo-nome")[0].value,
-                                                    tr.getElementsByClassName("campo-required")[0].checked
+                                                    tr.getElementsByClassName("campo-required")[0].checked,
+													options
                                                 );
                                             }
                                             Campo.extracts = function (trs) {
@@ -443,7 +452,40 @@
                                             return Desc;
                                         })();
                                         
+										function campoEnumCarregaOptions(td, values) {
+											td.innerHTML = campoEnumTr;
+											if (!values)
+												return;
+											var tbody = td.getElementsByTagName('tbody')[0];
+											tbody.getElementsByClassName("campo-options")[0].value = values[0];
+											for (var i = 1; i < values.length; i++) {
+												var tr = document.createElement('tr');
+												tr.innerHTML = '<?php echo Campo::getCampoDefault()->toEnumTrForm(); ?>'; 
+												tr.className = 'campo-enum-tr'; 
+												tr.getElementsByClassName("campo-options")[0].value = values[i];
+												tbody.appendChild(tr);
+											}
+										}
+										function campoEnumTrAcaoBotaoAdd(event, botao) {
+											event.preventDefault(); 
+											var tr = document.createElement('tr');
+											tr.innerHTML = '<?php echo Campo::getCampoDefault()->toEnumTrForm(); ?>'; 
+											tr.className = 'campo-enum-tr'; 
+											botao.parentElement.parentElement.parentElement.appendChild(tr);
+										}
+										function campoEnumTrAcaoBotaoRemove(event, botao) {
+											event.preventDefault(); 
+											botao.parentElement.parentElement.remove()
+										}
+										function campoTipoChange(event) {
+											console.log(event.target.value)
+											if(event.target.value == "enum")
+												event.target.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = campoEnumTr;
+											else
+												event.target.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = '';
+										}
                                         var campoTr = '<?php echo Campo::getCampoDefault()->toForm(); ?>';
+										var campoEnumTr = '<?php echo Campo::getCampoDefault()->toEnumForm(); ?>';
                                         
                                         document.getElementById("form-edit-campos").onsubmit = function(ev){
                                             ev.preventDefault();
@@ -495,6 +537,9 @@
                                                     var tr = document.createElement('tr');
                                                     tr.innerHTML = trHTMLs[i];
                                                     tr.className = 'campo-tr';
+													if(campos[i].tipo == "enum"){
+														campoEnumCarregaOptions(tr.childNodes[3],campos[i].options);
+													}
                                                     tbody.appendChild(tr);
                                                 }
                                                 document.getElementById('load-table').style.display = 'none'; 

@@ -11,7 +11,7 @@ class Campo {
         $this->tipo = isset($data['tipo']) && $data['tipo'] != '' ? strtolower($data['tipo']) : NULL;
         $this->nome = isset($data['nome']) && $data['nome'] != '' ? $data['nome'] : NULL;
         $this->required = isset($data["required"]) ? ( strtolower($data["required"]) == "false" || $data["required"] == "0" ? FALSE : (boolean) $data["required"]) : NULL;
-        $this->options = NULL;
+        $this->options = isset($data['options']) && $data['options'] != '' ? $data['options'] : NULL;
     }
     
     public static function getCampoId() {
@@ -114,7 +114,7 @@ class Campo {
                 $field = $this->nome . ' ENUM(';
                 if ($this->options) {
                     foreach ($this->options as $option)
-                        $field .= "'" . $option . "'" .',';
+                        $field .= "'" . $option . "',";
                     $field[strlen($field) -1] = ')';
                 }
                 else
@@ -127,7 +127,7 @@ class Campo {
     
     public function toForm($disabled = FALSE) {
         $tr =   "<td>" .
-                    "<select class=\"campo-tipo\"". ($disabled ? " disabled" : "") .">" . 
+                    "<select class=\"campo-tipo\" onchange=\"campoTipoChange(event);\" ". ($disabled ? " disabled" : "") .">" . 
                         "<option title=\"Para texto comum\" value=\"default\" ". ($this->tipo == 'default' ? " selected" : "") .">default</option>" . 
                         "<option title=\"Para texto longo\" value=\"text\"". ($this->tipo == 'text' ? " selected" : "") .">text</option>" . 
                         "<option value=\"int\"". ($this->tipo == 'int' ? " selected" : "") .">int</option>" . 
@@ -139,9 +139,26 @@ class Campo {
                     "</select>" .
                 "</td>" .
                 "<td><input type=\"text\" class=\"campo-nome\" value=\"". $this->nome ."\" required". ($disabled ? " disabled" : "") ." /></td>" .
-                "<td style=\"text-align: center; vertical-align: bottom;\"><input type=\"checkbox\" class=\"campo-required\"" . ($this->required ? " checked" : "") . "". ($disabled ? " disabled" : "") ." /></td>" .
+                "<td style=\"text-align: center; vertical-align: middle;\"><input type=\"checkbox\" class=\"campo-required\"" . ($this->required ? " checked" : "") . "". ($disabled ? " disabled" : "") ." /></td>" .
                 "<td></td>" .
                 "<td><button". ($disabled ? " disabled" : "") ." onclick=\"this.parentElement.parentElement.remove()\">X</button></td>";
+        return $tr;
+    }
+	
+	public function toEnumForm($disabled = FALSE) {
+        $table =   "<table>" .
+					"<tbody>" .
+						"<tr>" .
+							"<td><input type=\"text\" class=\"campo-options\" value=\"\"". ($disabled ? " disabled" : "") ." /></td>" .
+							"<td><button". ($disabled ? " disabled" : "") ." onclick=\"campoEnumTrAcaoBotaoAdd(event, this);\">+</button></td>" .
+						"</tr>" . 
+					"</tbody>" .
+				"</table>";
+        return $table;
+    }
+	public function toEnumTrForm($disabled = FALSE) {
+        $tr =   "<td><input type=\"text\" class=\"campo-options\" value=\"\" required". ($disabled ? " disabled" : "") ." /></td>" .
+				"<td><button". ($disabled ? " disabled" : "") ." onclick=\"campoEnumTrAcaoBotaoRemove(event,this);\">X</button></td>";
         return $tr;
     }
 }
