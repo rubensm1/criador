@@ -347,21 +347,21 @@
                                                     tr.getElementsByClassName("campo-required")[0].checked,
 													options
                                                 );
-                                            }
+                                            };
                                             Campo.extracts = function (trs) {
                                                 var campos = [];
                                                 for (var i = 0; i < trs.length; i++)
                                                     campos.push(Campo.extract(trs[i]));
                                                 return campos;
-                                            }
+                                            };
                                             Campo.convert = function (descs) {
                                                 var campos = [];
                                                 for (var i = 0; i < descs.length; i++){
                                                     var tipo;
                                                     switch (descs[i].type.toUpperCase()) {
-                                                        case 'TINYTEXT':
-                                                        case 'TEXT':
-                                                        case 'MEDIUMTEXT':
+                                                        case 'TINYTEXT': 
+                                                        case 'TEXT': 
+                                                        case 'MEDIUMTEXT': 
                                                         case 'LONGTEXT':
                                                             tipo = "text";
                                                             break;
@@ -422,7 +422,7 @@
                                                     campos.push(new Campo(tipo, descs[i].field, !descs[i].null, descs[i].typeProps));
                                                 }
                                                 return campos;
-                                            }
+                                            };
                                             return Campo;
                                         })();
                                         
@@ -439,7 +439,7 @@
                                                     this.typeProps = data["Type"].indexOf(',') < 0 ? [ eval(data["Type"].slice(indexProps)) ] : ( eval("Array" + data["Type"].slice(indexProps)) );
                                                 }
                                                 this.null = data["Null"] == "YES" ? true : (data["Null"] == "NO" ? false : null);
-                                                this.key = data["Key"]
+                                                this.key = data["Key"];
                                                 this.default = data["Default"];
                                                 this.extra = data["Extra"];
                                             }
@@ -448,7 +448,7 @@
                                                 for (var i = 0; i < datas.length; i++)
                                                     descs.push(new Desc (datas[i]) );
                                                 return descs;
-                                            }
+                                            };
                                             return Desc;
                                         })();
                                         
@@ -478,7 +478,6 @@
 											botao.parentElement.parentElement.remove()
 										}
 										function campoTipoChange(event) {
-											console.log(event.target.value)
 											if(event.target.value == "enum")
 												event.target.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML = campoEnumTr;
 											else
@@ -509,7 +508,7 @@
                                                         break;
                                                 }
                                             }
-                                        }
+                                        };
                                         document.getElementById("load-table").onsubmit = function(ev){
                                             ev.preventDefault();
                                             if (this.reportValidity()) {
@@ -545,7 +544,7 @@
                                                 document.getElementById('load-table').style.display = 'none'; 
                                                 document.getElementById('form-edit-campos').style.display = 'block';
                                             }
-                                        }
+                                        };
                                     </script>
                         <?php 
                                     break;
