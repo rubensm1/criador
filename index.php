@@ -118,8 +118,9 @@
                     foreach ($comandos as $comando){
                         $comando->aplicarNomeClasse($_POST['classe']); 
                         //echo "<pre>".$comando->getComando()."</pre>";
-                        //eval ($comando->getComando());
+                        eval ($comando->getComando());
                     }
+					echo "<h1>Criado!</h1>";
                 }
                 else 
                     echo "<br />Falha na Criação, Classe não definida<br />";
@@ -535,7 +536,8 @@
                                                 for (var i = 0; i < trHTMLs.length; i++) {
                                                     var tr = document.createElement('tr');
                                                     tr.innerHTML = trHTMLs[i];
-                                                    tr.className = 'campo-tr';
+													if (campos[i].nome != 'id')
+														tr.className = 'campo-tr';
 													if(campos[i].tipo == "enum"){
 														campoEnumCarregaOptions(tr.childNodes[3],campos[i].options);
 													}
