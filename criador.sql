@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
+-- version 3.5.1
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: 26-Mar-2016 às 03:49
--- Versão do servidor: 5.6.17
--- PHP Version: 5.5.12
+-- Servidor: localhost
+-- Tempo de Geração: 
+-- Versão do Servidor: 5.5.24-log
+-- Versão do PHP: 5.4.3
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `criador`
+-- Banco de Dados: `criador`
 --
 
 -- --------------------------------------------------------
@@ -45,9 +45,9 @@ INSERT INTO `arquivo` (`id`, `nome`, `funcao_id`, `conteudo`) VALUES
 (4, 'A@@@.php', 1, '<?php\r\n\r\n/**\r\n * Classe A@@@\r\n */\r\nclass A@@@ extends Model {\r\n\r\n    protected static $useTable = "a@@@";\r\n    \r\n    private $nome;\r\n\r\n    function A@@@($data = NULL) {\r\n        if ($data != NULL) {\r\n            parent::__construct(isset($data[''id'']) ? (int) $data[''id''] : NULL);\r\n            $this->nome = isset($data[''nome'']) ? utf8_encode($data[''nome'']) : NULL;\r\n        } else\r\n            parent::__construct();\r\n    }\r\n\r\n    public function toArray() {\r\n        return get_object_vars($this);\r\n    }\r\n\r\n}'),
 (5, 'A@@@Controller.php', 1, '<?php\r\n\r\n/**\r\n * Controller do A@@@\r\n */\r\nclass A@@@Controller extends Controller {\r\n\r\n    var $name = ''a@@@'';\r\n\r\n    public function index() {\r\n        $this->set("a@@@List", json_encode(A@@@::all()));\r\n    }\r\n\r\n    public function salvar($dados) {\r\n        $a@@@ = new A@@@($dados);\r\n        $a@@@ = $a@@@->persist();\r\n        if ($a@@@)\r\n            return $a@@@->getId();\r\n    }\r\n\r\n    public function carregar($dados) {\r\n        return json_encode(A@@@::load($dados[''id'']));\r\n    }\r\n\r\n    public function excluir($dados) {\r\n        a@@@ = new A@@@($dados);\r\n        return json_encode(a@@@->delete());\r\n    }\r\n\r\n    public function a@@@Table() {\r\n        return json_encode(A@@@::all());\r\n    }\r\n\r\n    public function table() {\r\n        $this->set("a@@@List", A@@@::allMap());\r\n    }\r\n\r\n}'),
 (6, 'a@@@.js', 2, 'var A@@@;\r\n\r\nA@@@ = (function() {\r\n\r\n    function A@@@(data) {\r\n        if (typeof data != "object")\r\n            return;\r\n        this.id = data["id"];\r\n        j@@@\r\n    }\r\n\r\n    A@@@.prototype.formatar = View.prototype.formatar;\r\n    \r\n    A@@@.prototype.htmlTable = View.prototype.htmlTable;\r\n    \r\n    return A@@@;\r\n})();'),
-(7, 'index.php', 2, '<div class="panel panel-jquery">\r\n    <div class="panel-heading">A@@@</div>\r\n    <div id="div-a@@@-table" class="div-model-table" class="panel-body">\r\n        \r\n    </div>\r\n</div>\r\n<button type="button" onclick="atualizaA@@@Table()">Atualizar</button>\r\n<button id="bt-cadastro" type="button" onclick="$(''#a@@@-form'').dialog(''open'');">Cadastro</button>\r\n<form id="a@@@-form" class="model-form" method="POST" style="display:none;">\r\n    <table class="table table-bordered">\r\n        <tr><td>ID:</td><td><input type="number" name="id" disabled /></td></tr>\r\n        h@@@\r\n    </table>\r\n</form>\r\n\r\n<script>\r\n    //var a@@@ = new A@@@();\r\n    function atualizaA@@@Table(a@@@s) {\r\n        if (a@@@s == null || (Array.isArray(a@@@s) && a@@@s.length == 0)) {\r\n            A@@@.lista = a@@@s = view.carregarLista(JSON.parse(ajaxPadrao("a@@@", "a@@@Table", null)), A@@@.name);\r\n        }\r\n        $("#div-a@@@-table").html(new A@@@().htmlTable(a@@@s));\r\n        $(".bt-select-item" ).button({icons: {primary: "ui-icon-check"}, text: false});\r\n    }\r\n    A@@@.lista = view.carregarLista(<?php if (isset($a@@@List)) echo $a@@@List; else echo "null"; ?>, A@@@.name);\r\n    atualizaA@@@Table(A@@@.lista);\r\n\r\n    $("#a@@@-form").dialog({\r\n        title: "Cadastro de A@@@s",\r\n        width: 600,\r\n        height: 400,\r\n        autoOpen: false,\r\n        buttons: [\r\n            {text: "Salvar", width: 100, type:"submit", form: "a@@@-form", click: function(){}},\r\n            {text: "Excluir", width: 100, click: function () {ajaxPadrao("a@@@", "excluir", {id: parseInt($("#a@@@-form").find("[name=''id'']").val())} ); atualizaA@@@Table();}},\r\n            {text: "Limpar", width: 100, click: function () {$(this)[0].reset();}},\r\n            {text: "Fechar", width: 100, click: function () {$(this).dialog("close");}}\r\n        ]\r\n    });\r\n    $("#a@@@-form").submit ( function(ev){\r\n        ev.preventDefault();\r\n        if ($("#a@@@-form")[0].reportValidity()) {\r\n            var obj = $(this).serializeObject();\r\n            var idImput = $(this).find("[name=''id'']");\r\n            if (idImput.val())\r\n                obj["id"] = parseInt(idImput.val());\r\n            idImput.val(parseInt (ajaxPadrao("a@@@", "salvar", obj ) ) );\r\n            atualizaA@@@Table();\r\n        }\r\n    });\r\n    $("button").button();\r\n</script>'),
+(7, 'index.php', 2, '<div class="panel panel-jquery">\r\n    <div class="panel-heading">A@@@</div>\r\n    <div id="div-a@@@-table" class="div-model-table" class="panel-body">\r\n        \r\n    </div>\r\n</div>\r\n<button type="button" onclick="atualizaA@@@Table()">Atualizar</button>\r\n<button id="bt-cadastro" type="button" onclick="$(''#a@@@-form'').dialog(''open'');">Cadastro</button>\r\n<form id="a@@@-form" class="model-form" method="POST" style="display:none;">\r\n    <table class="table table-bordered">\r\n        <tr><td>ID:</td><td><input type="number" name="id" disabled /></td></tr>\r\n        h@@@\r\n    </table>\r\n</form>\r\n\r\n<script>\r\n    //var a@@@ = new A@@@();\r\n    function atualizaA@@@Table(a@@@s) {\r\n        if (a@@@s == null || (Array.isArray(a@@@s) && a@@@s.length == 0)) {\r\n            A@@@.lista = a@@@s = view.carregarLista(JSON.parse(ajaxPadrao("a@@@", "a@@@Table", null)), A@@@.name);\r\n        }\r\n        $("#div-a@@@-table").html(new A@@@().htmlTable(a@@@s));\r\n        $(".bt-select-item" ).button({icons: {primary: "ui-icon-check"}, text: false});\r\n    }\r\n    A@@@.lista = view.carregarLista(<?php if (isset($a@@@List)) echo $a@@@List; else echo "null"; ?>, A@@@.name);\r\n    atualizaA@@@Table(A@@@.lista);\r\n\r\n    $("#a@@@-form").dialog({\r\n        title: "Cadastro de A@@@s",\r\n        width: 600,\r\n        height: 400,\r\n        autoOpen: false,\r\n        buttons: [\r\n            {text: "Salvar", width: 100, type:"submit", form: "a@@@-form", click: function(){}},\r\n            {text: "Excluir", width: 100, click: function () {ajaxPadrao("a@@@", "excluir", {id: parseInt($("#a@@@-form").find("[name=''id'']").val())} ); atualizaA@@@Table();}},\r\n            {text: "Limpar", width: 100, click: function () {$(this)[0].reset();}},\r\n            {text: "Fechar", width: 100, click: function () {$(this).dialog("close");}}\r\n        ]\r\n    });\r\n    $("#a@@@-form").submit ( function(ev){\r\n        ev.preventDefault();\r\n        if ($("#a@@@-form")[0].reportValidity()) {\r\n            var checksFalse = $(this).find(":checkbox[value=false]");\r\n            $(checksFalse).prop("checked",true);\r\n            var obj = $(this).serializeObject();\r\n            $(checksFalse).prop("checked",false);\r\n            var idImput = $(this).find("[name=''id'']");\r\n            if (idImput.val())\r\n                obj["id"] = parseInt(idImput.val());\r\n            idImput.val(parseInt (ajaxPadrao("a@@@", "salvar", obj ) ) );\r\n            atualizaA@@@Table();\r\n        }\r\n    });\r\n    $("button").button();\r\n</script>'),
 (8, 'A@@@.php', 2, '<?php\r\n\r\n/**\r\n * Classe A@@@\r\n */\r\nclass A@@@ extends Model {\r\n\r\n    protected static $useTable = "a@@@";\r\n    \r\n    M@@@\r\n    function A@@@($data = NULL) {\r\n        if ($data != NULL) {\r\n            parent::__construct(isset($data[''id'']) ? (int) $data[''id''] : NULL);\r\n            m@@@\r\n        } else\r\n            parent::__construct();\r\n    }\r\n\r\n    public function toArray() {\r\n        return get_object_vars($this);\r\n    }\r\n\r\n}'),
-(9, 'A@@@Controller.php', 2, '<?php\r\n\r\n/**\r\n * Controller do A@@@\r\n */\r\nclass A@@@Controller extends Controller {\r\n\r\n    var $name = ''a@@@'';\r\n\r\n    public function index() {\r\n        $this->set("a@@@List", json_encode(A@@@::all()));\r\n    }\r\n\r\n    public function salvar($dados) {\r\n        $a@@@ = new A@@@($dados);\r\n        $a@@@ = $a@@@->persist();\r\n        if ($a@@@)\r\n            return $a@@@->getId();\r\n    }\r\n\r\n    public function carregar($dados) {\r\n        return json_encode(A@@@::load($dados[''id'']));\r\n    }\r\n\r\n    public function excluir($dados) {\r\n        a@@@ = new A@@@($dados);\r\n        return json_encode(a@@@->delete());\r\n    }\r\n\r\n    public function a@@@Table() {\r\n        return json_encode(A@@@::all());\r\n    }\r\n\r\n    public function table() {\r\n        $this->set("a@@@List", A@@@::allMap());\r\n    }\r\n\r\n}\r\n'),
+(9, 'A@@@Controller.php', 2, '<?php\r\n\r\n/**\r\n * Controller do A@@@\r\n */\r\nclass A@@@Controller extends Controller {\r\n\r\n    var $name = ''a@@@'';\r\n\r\n    public function index() {\r\n        $this->set("a@@@List", json_encode(A@@@::all()));\r\n    }\r\n\r\n    public function salvar($dados) {\r\n        $a@@@ = new A@@@($dados);\r\n        $a@@@ = $a@@@->persist();\r\n        if ($a@@@)\r\n            return $a@@@->getId();\r\n    }\r\n\r\n    public function carregar($dados) {\r\n        return json_encode(A@@@::load($dados[''id'']));\r\n    }\r\n\r\n    public function excluir($dados) {\r\n        $a@@@ = new A@@@($dados);\r\n        return json_encode($a@@@->delete());\r\n    }\r\n\r\n    public function a@@@Table() {\r\n        return json_encode(A@@@::all());\r\n    }\r\n\r\n    public function table() {\r\n        $this->set("a@@@List", A@@@::allMap());\r\n    }\r\n\r\n}\r\n'),
 (10, 'A@@@.php', 3, '<?php\r\n\r\n/**\r\n * Classe A@@@\r\n */\r\nclass A@@@ extends Model {\r\n\r\n    protected static $useTable = "a@@@";\r\n    \r\n    M@@@\r\n    function A@@@($data = NULL) {\r\n        if ($data != NULL) {\r\n            parent::__construct(isset($data[''id'']) ? (int) $data[''id''] : NULL);\r\n            m@@@\r\n        } \r\n        else\r\n            parent::__construct();\r\n    }\r\n\r\n    public function toArray() {\r\n        return get_object_vars($this);\r\n    }\r\n\r\n}');
 
 -- --------------------------------------------------------
@@ -139,17 +139,17 @@ INSERT INTO `teste` (`id`, `informacao`, `ordem`, `descricao`, `familia`) VALUES
 (5, 'Aeeee', 1, '', 'Tipo 3');
 
 --
--- Constraints for dumped tables
+-- Restrições para as tabelas dumpadas
 --
 
 --
--- Limitadores para a tabela `arquivo`
+-- Restrições para a tabela `arquivo`
 --
 ALTER TABLE `arquivo`
   ADD CONSTRAINT `arquivo_ibfk_1` FOREIGN KEY (`funcao_id`) REFERENCES `funcao` (`id`);
 
 --
--- Limitadores para a tabela `comando`
+-- Restrições para a tabela `comando`
 --
 ALTER TABLE `comando`
   ADD CONSTRAINT `comando_ibfk_1` FOREIGN KEY (`funcao_id`) REFERENCES `funcao` (`id`);
