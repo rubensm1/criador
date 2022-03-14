@@ -7,7 +7,7 @@ abstract class Model implements JsonSerializable {
     protected static $estrutura = array("id" => "int");
     protected $id;
 
-    function Model($id = 0) {
+    function __construct($id = 0) {
         $class = get_class($this);
         if ($class::$useTable || $class == "Model") {
             self::init();

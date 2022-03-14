@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `funcao` (
 --
 
 INSERT INTO `funcao` (`id`, `nome`) VALUES
-(1, 'CRUD PadrÃ£o'),
+(1, 'CRUD Padrão'),
 (2, 'CRUD Melhorado'),
 (3, 'Model Somente');
 
@@ -132,11 +132,45 @@ CREATE TABLE IF NOT EXISTS `teste` (
 --
 
 INSERT INTO `teste` (`id`, `informacao`, `ordem`, `descricao`, `familia`) VALUES
-(1, 'Qualquer', 1, 'sei lÃ¡', ''),
+(1, 'Qualquer', 1, 'sei lá', ''),
 (2, 'Qualquer outra', 1, '', 'Tipo 2'),
 (3, 'Qualquer outra', 1, '', ''),
 (4, '', 1, '', ''),
 (5, 'Aeeee', 1, '', 'Tipo 3');
+
+CREATE TABLE IF NOT EXISTS `tipo` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `descricao` VARCHAR(31) NOT NULL UNIQUE
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+
+INSERT INTO `tipo` (`descricao`) VALUES
+('default'),
+('text'),
+('int'),
+('number'),
+('boolean'),
+('date'),
+('time'),
+('enum');
+
+
+CREATE TABLE IF NOT EXISTS `templates` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `nome` VARCHAR(31) NOT NULL,
+  `chave` VARCHAR(31) NOT NULL UNIQUE,
+  `default_return` TEXT,
+  `spaces_start_lines` int NOT NULL DEFAULT 0,
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `campo_processors` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `tipo` VARCHAR(31) NOT NULL,
+  `template_chave` VARCHAR(31) NOT NULL,
+  `return` text NOT NULL
+  FOREIGN KEY (`tipo`) REFERENCES `tipo` (`descricao`) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`template_chave`) REFERENCES `templates` (`chave`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 --
 -- Restrições para as tabelas dumpadas

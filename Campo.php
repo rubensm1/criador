@@ -7,7 +7,7 @@ class Campo {
     private $required;
     private $options;
     
-    public function Campo($data) {
+    public function __construct($data) {
         $this->tipo = isset($data['tipo']) && $data['tipo'] != '' ? strtolower($data['tipo']) : NULL;
         $this->nome = isset($data['nome']) && $data['nome'] != '' ? $data['nome'] : NULL;
         $this->required = isset($data["required"]) ? ( strtolower($data["required"]) == "false" || $data["required"] == "0" ? FALSE : (boolean) $data["required"]) : NULL;
@@ -21,6 +21,14 @@ class Campo {
             'required' => TRUE,
             'options' => NULL
         ));
+    }
+
+    public function getTipo () {
+        return $this->tipo;
+    }
+
+    public function getNome() {
+        return $this->nome;
     }
     
     public static function getCampoDefault() {
@@ -95,7 +103,61 @@ class Campo {
                 return 'this.'. $this->nome .' = data["'. $this->nome .'"];';
         }
     }
-    
+	
+    public function toTsF() {
+        switch ($this->tipo) {
+            case "text":
+            case "enum":
+                return $this->nome .':string;';
+            case "number":
+            case "int":
+                return $this->nome .':number;';
+            case "boolean": 
+                return $this->nome .':boolean;';
+            case "date":
+            case "time":
+                return $this->nome .':Date;';
+            default:
+                return $this->nome .';';
+        }
+    }
+	
+    public function toTsC1() {
+        switch ($this->tipo) {
+            case "text":
+            case "enum":
+                return $this->nome .':string,';
+            case "number":
+            case "int":
+                return $this->nome .':number,';
+            case "boolean": 
+                return $this->nome .':boolean,';
+            case "date":
+            case "time":
+                return $this->nome .':Date,';
+            default:
+                return $this->nome .';';
+        }
+    }
+    public function toTsC2() {
+        return 'this.'. $this->nome .' = '. $this->nome .';';
+    }
+    public function toTsC3() {
+        switch ($this->tipo) {
+            case "number":
+                return 'this.'. $this->nome .' = parseFloat(id["'. $this->nome .'"]);';
+            case "int":
+                return 'this.'. $this->nome .' = parseInt(id["'. $this->nome .'"]);';
+            case "boolean": 
+                return 'this.'. $this->nome .' = id["'. $this->nome .'"] ? (id["'. $this->nome .'"] == "false" || id["'. $this->nome .'"] == "0" ? false : true) : false;';
+            case "date":
+            case "time":
+                return 'this.'. $this->nome .' = id["'. $this->nome .'"] ? new Date(id["'. $this->nome .'"] + " GMT") : null;';
+            default:
+                return 'this.'. $this->nome .' = id["'. $this->nome .'"];';
+        }
+    }
+	
     public function toSql() {
         switch ($this->tipo) {
             case "text":
@@ -123,6 +185,10 @@ class Campo {
             default:
                 return $this->nome .' VARCHAR(64)' . ($this->required ? ' NOT NULL' : '');
         }
+    }
+
+    public function toGeneric() {
+        
     }
     
     public function toForm($disabled = FALSE) {

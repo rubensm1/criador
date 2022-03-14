@@ -13,7 +13,7 @@ class Connexao {
     private $conexao;
     private $resultado;
 
-    function Connexao($database = DataBaseConfig::BANCO, $host = DataBaseConfig::HOST, $port = DataBaseConfig::PORT, $user = DataBaseConfig::USER, $pass = DataBaseConfig::PASS) {
+    function __construct($database = DataBaseConfig::BANCO, $host = DataBaseConfig::HOST, $port = DataBaseConfig::PORT, $user = DataBaseConfig::USER, $pass = DataBaseConfig::PASS) {
         try {
             if ($pass == '')
                 $this->conexao = new PDO('mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database, $user);

@@ -19,7 +19,7 @@ function achaInclude ($linha) {
 }
 /* Gera arquivo resumido
  * string $in arquivo de entrada
- * string $out arquivo de saída. NULL significa que a saída será retornada na função ao invez de salva em arquivo
+ * string $out arquivo de saï¿½da. NULL significa que a saï¿½da serï¿½ retornada na funï¿½ï¿½o ao invez de salva em arquivo
  */
 function minArquivo($in, $out = NULL) {
 	global $inGlobal, $outGlobal;
@@ -27,7 +27,7 @@ function minArquivo($in, $out = NULL) {
 	$lines = file($in);
 
 	if (!$lines) 
-		throw new Exception ("Não foi possivel encontrar o arquivo $filename");
+		throw new Exception ("Nï¿½o foi possivel encontrar o arquivo $in");
 	
 	$file = NULL;
 	if ($out) {
@@ -52,7 +52,7 @@ function minArquivo($in, $out = NULL) {
 	
 	$string = "";
 	
-	/* Retira os comentários e linhas vazias e cria uma unica linha */
+	/* Retira os comentï¿½rios e linhas vazias e cria uma unica linha */
 	foreach ($lines as $line) {
 		$line = trim($line);
 		if (strlen($line) > 0 && !preg_match('/^\/\//', $line)) {

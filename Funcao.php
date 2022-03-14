@@ -9,7 +9,7 @@ class Funcao extends Model {
     
     private $nome;
 
-    function Funcao($data = NULL) {
+    function __construct($data = NULL) {
         if ($data != NULL) {
             parent::__construct(isset($data['id']) && $data['id'] != '' ? (int) $data['id'] : NULL);
             $this->nome = isset($data['nome']) && $data['nome'] != '' ? $data['nome'] : NULL;

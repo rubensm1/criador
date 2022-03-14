@@ -49,6 +49,8 @@
     include_once 'Comando.php';
     include_once 'Arquivo.php';
     include_once 'Campo.php';
+    include_once 'Template.php';
+    include_once 'CampoProcessor.php';
     
     Model::init();
 
@@ -60,6 +62,14 @@
             throw new Exception("Falha ao escrever no arquivo $nomeArquivo");
         if (!fclose($file))
             throw new Exception ("Falha ao fechar o arquivo $nomeArquivo");
+    }
+
+    function criaDiretorio($caminho) {
+        exec ("mkdir $caminho");
+    }
+
+    function criaArquivo($caminho, $nomeArq) {
+        exec ("touch $caminho/$nomeArq");
     }
 
     if (isset ($_GET['c'])) {

@@ -11,7 +11,7 @@ class Comando extends Model {
     private $funcao_id;
     private $comando;
 
-    function Comando($data = NULL) {
+    function __construct($data = NULL) {
         if ($data != NULL) {
             parent::__construct(isset($data['id']) && $data['id'] != '' ? (int) $data['id'] : NULL);
             $this->ordem = isset($data['ordem']) && $data['ordem'] != '' ? (int) $data['ordem'] : NULL;
