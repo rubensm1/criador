@@ -54,31 +54,27 @@ class Arquivo extends Model {
         $campos[] = new Campo("text","descricao", FALSE);
         $campos[] = new Campo("enum","familia",FALSE,array("Tipo 1", "Tipo 2", "Tipo 3"));*/
         
-        $subs = array("","","","","","","","");
+        $subs = array("","","","","","","");
         foreach ($campos as $c){
-			// PHP Fields Model
-            $subs[0] .= $c->toPhpF() . "\n    ";
-			// PHP Fields Construtor
-            $subs[1] .= $c->toPhpC() . "\n            ";
 			// Javascript Construtor
-            $subs[2] .= $c->toJs() . "\n        ";
+            $subs[0] .= $c->toJs() . "\n        ";
 			// Typescript Fields 
-            $subs[3] .= $c->toTsF() . "\n    ";
+            $subs[1] .= $c->toTsF() . "\n    ";
 			// Typescript Construtor
-            $subs[4] .= $c->toTsC1() . "\n        ";
+            $subs[2] .= $c->toTsC1() . "\n        ";
 			// Typescript Construtor
-            $subs[5] .= $c->toTsC2() . "\n        ";
+            $subs[3] .= $c->toTsC2() . "\n        ";
 			// Typescript Construtor
-            $subs[6] .= $c->toTsC3() . "\n        ";
+            $subs[4] .= $c->toTsC3() . "\n        ";
 			// HTML Fields
-            $subs[7] .= $c->toHtml() . "\n        ";
+            $subs[5] .= $c->toHtml() . "\n        ";
             // Generic Fields
-            $subs[8] .= $c->toGeneric() . "\n        ";
+            $subs[6] .= $c->toGeneric() . "\n        ";
         }
             
-        $this->conteudo = str_replace(array("M@@@","m@@@","j@@@","T@@@","t1@@@","t2@@@","t3@@@","h@@@","gg@@@"),$subs,$this->conteudo);
+        $this->conteudo = str_replace(array("j@@@","T@@@","t1@@@","t2@@@","t3@@@","h@@@","gg@@@"),$subs,$this->conteudo);
 
-        /*preg_match_all("/###[a-zA-Z0-9_]+###/",
+        preg_match_all("/###[a-zA-Z0-9_]+###/",
             $this->conteudo,
             $out, PREG_PATTERN_ORDER);
 
@@ -93,7 +89,7 @@ class Arquivo extends Model {
             $result = Template::nativeQuery($query);
             foreach ($result as $r) {
                 $template = new Template((array)$r);
-                $processors = getCampoProcessors($template->getChave());
+                $processors = $this->getCampoProcessors($template->getChave());
                 $replacers[$template->getChave()] = (object) [
                     'template' => $template,
                     'processors' => $processors
@@ -105,8 +101,9 @@ class Arquivo extends Model {
                         $area .= "    "; 
                     }
                 }
+                $this->conteudo = str_replace('###'.$template->getChave().'###', $area, $this->conteudo);
             }
-        }*/
+        }
     }
 
     public function toArray() {

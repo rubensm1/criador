@@ -34,7 +34,7 @@ class CampoProcessor extends Model {
     }
 
     public function getReturn() {
-        return $this->template_chave;
+        return $this->return;
     }
 
     public function toArray() {
